@@ -16,8 +16,8 @@ class TagParser implements TagParserInterface
 
     public function parse(): TagCollectionInterface
     {
-        preg_match_all('/<(\w+.*)\b(?=[^>]*>)/i', $this->content->getContent(), $matches);
+        preg_match_all('/<(?<data>[\w\s\"\'\=\-]*)>/i', $this->content->getContent(), $matches);
 
-        return new TagCollection($matches[1]);
+        return new TagCollection($matches['data']);
     }
 }

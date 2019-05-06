@@ -13,20 +13,23 @@ class Tag implements TagInterface
     public function __construct(string $tag)
     {
         $this->tag = $tag;
+
         $this->parseTagName();
         $this->parseTagAttributes();
     }
 
     private function parseTagName(): void
     {
-        preg_match_all('/([a-zA-Z]*)/iu', $this->tag,$matches);
-        $this->name = $matches[1][0];
+        preg_match('/(?<name>[a-zA-Z]*)/iu', $this->tag,$matches);
+
+        $this->name = $matches['name'];
     }
 
     private function parseTagAttributes(): void
     {
-        preg_match_all('/(\w+)=[\'"]([^\'"]*)/iu', $this->tag,$matches);
-        $this->attributes = array_combine($matches[1], $matches[2]);
+        preg_match_all('/(?<attribute>\w+)=[\'"](?<value>[^\'"]*)/iu', $this->tag,$matches);
+
+        $this->attributes = array_combine($matches['attribute'], $matches['value']);
     }
 
     public function getName(): string
@@ -41,10 +44,6 @@ class Tag implements TagInterface
 
     public function getAttributeByName(string $name): ?string
     {
-        if (isset($this->attributes[$name])) {
-            return $this->attributes[$name];
-        }
-
-        return null;
+        return $this->attributes[$name] ?: null;
     }
 }
