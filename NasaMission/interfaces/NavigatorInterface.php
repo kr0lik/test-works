@@ -35,7 +35,7 @@ interface NavigatorInterface
     public function move(): NavigatorInterface;
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPosition();
+    public function getPosition(): string;
 }

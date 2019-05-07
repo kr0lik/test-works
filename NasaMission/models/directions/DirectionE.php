@@ -3,6 +3,7 @@ namespace app\models\directions;
 
 use app\interfaces\DirectionInterface;
 use app\lib\DirectionFactory;
+use app\lib\DirectionTypeEnum;
 
 /**
  * Class DirectionE
@@ -21,7 +22,7 @@ class DirectionE extends AbstractDirection
      */
     public function toLeft(): DirectionInterface
     {
-        return DirectionFactory::create('N');
+        return DirectionFactory::create(DirectionTypeEnum::TYPE_NORTH);
     }
 
     /**
@@ -30,6 +31,14 @@ class DirectionE extends AbstractDirection
      */
     public function toRight(): DirectionInterface
     {
-        return DirectionFactory::create('S');
+        return DirectionFactory::create(DirectionTypeEnum::TYPE_SOUTH);
+    }
+
+    /**
+     * @return string
+     */
+    public static function getType(): string
+    {
+        return DirectionTypeEnum::TYPE_EAST;
     }
 }

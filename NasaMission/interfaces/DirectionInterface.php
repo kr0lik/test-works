@@ -30,5 +30,5 @@ interface DirectionInterface
     /**
      * @return string
      */
-    public function getName(): string;
+    public static function getType(): string;
 }

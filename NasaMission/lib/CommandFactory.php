@@ -3,6 +3,7 @@ namespace app\lib;
 
 use app\exception\CommandNotExistException;
 use app\interfaces\CommandInterface;
+use app\models\commands\{CommandL, CommandM, CommandR};
 
 /**
  * Class CommandFactory
@@ -11,18 +12,25 @@ use app\interfaces\CommandInterface;
 class CommandFactory
 {
     /**
-     * @param string $name
+     * @var array
+     */
+    private static $map = [
+        CommandL::class,
+        CommandR::class,
+        CommandM::class
+    ];
+
+    /**
+     * @param string $type
      * @return CommandInterface
      * @throws CommandNotExistException
      */
-    public static function create(string $name): CommandInterface
+    public static function create(string $type): CommandInterface
     {
-        $class = 'app\models\commands\Command' . strtoupper($name);
-
-        if (! class_exists($class)) {
-            throw new CommandNotExistException("Unknown command name - '{$name}'");
+        foreach (self::$map as $class) {
+            if ($class::getType() === $type) return new $class();
         }
 
-        return new $class();
+        throw new CommandNotExistException("Unknown command - '{$type}'");
     }
 }

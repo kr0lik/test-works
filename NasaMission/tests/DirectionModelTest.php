@@ -8,6 +8,7 @@
 
 namespace app\tests;
 
+use app\lib\DirectionTypeEnum;
 use PHPUnit\Framework\TestCase;
 use app\lib\DirectionFactory;
 
@@ -17,7 +18,7 @@ class DirectionModelTest extends TestCase
 
     public function setUp()
     {
-        $this->direction = DirectionFactory::create('N');
+        $this->direction = DirectionFactory::create(DirectionTypeEnum::TYPE_NORTH);
     }
 
     public function testToRight()
@@ -44,6 +45,6 @@ class DirectionModelTest extends TestCase
 
     public function testToString()
     {
-        $this->assertEquals('N', $this->direction->getName());
+        $this->assertEquals(DirectionTypeEnum::TYPE_NORTH, $this->direction::getType());
     }
 }

@@ -3,6 +3,7 @@ namespace app\lib;
 
 use app\exception\DirectionNotExistException;
 use app\interfaces\DirectionInterface;
+use app\models\directions\{DirectionE, DirectionN, DirectionS, DirectionW};
 
 /**
  * Class DirectionFactory
@@ -11,18 +12,26 @@ use app\interfaces\DirectionInterface;
 class DirectionFactory
 {
     /**
-     * @param string $name
+     * @var array
+     */
+    private static $map = [
+        DirectionN::class,
+        DirectionE::class,
+        DirectionS::class,
+        DirectionW::class
+    ];
+
+    /**
+     * @param string $type
      * @return DirectionInterface
      * @throws DirectionNotExistException
      */
-    public static function create(string $name): DirectionInterface
+    public static function create(string $type): DirectionInterface
     {
-        $class = 'app\models\directions\Direction' . strtoupper($name);
-
-        if (! class_exists($class)) {
-            throw new DirectionNotExistException("Unknown direction name - '{$name}'");
+        foreach (self::$map as $class) {
+            if ($class::getType() === $type) return new $class();
         }
 
-        return new $class();
+        throw new DirectionNotExistException("Unknown direction name - '{$type}'");
     }
 }

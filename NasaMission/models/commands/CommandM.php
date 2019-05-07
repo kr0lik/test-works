@@ -2,6 +2,7 @@
 namespace app\models\commands;
 
 use app\interfaces\{RoverInterface, CommandInterface};
+use app\lib\CommandTypeEnum;
 
 /**
  * Class CommandM
@@ -15,5 +16,13 @@ class CommandM implements CommandInterface
     public function do(RoverInterface $rover): void
     {
         $rover->getNavigator()->move();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getType(): string
+    {
+        return CommandTypeEnum::TYPE_MOVE;
     }
 }

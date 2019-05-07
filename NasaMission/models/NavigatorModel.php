@@ -124,6 +124,6 @@ class NavigatorModel implements NavigatorInterface
      */
     public function getPosition(): string
     {
-        return "{$this->coordinates->toString()} {$this->direction->getName()}";
+        return "{$this->coordinates->toString()} {$this->direction::getType()}";
     }
 }

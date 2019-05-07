@@ -20,16 +20,6 @@ abstract class AbstractDirection implements DirectionInterface
     protected $yShift = 0;
 
     /**
-     * @return DirectionInterface
-     */
-    abstract public function toLeft(): DirectionInterface;
-
-    /**
-     * @return DirectionInterface
-     */
-    abstract public function toRight(): DirectionInterface;
-
-    /**
      * @return int
      */
     public function getXShift(): int
@@ -46,11 +36,17 @@ abstract class AbstractDirection implements DirectionInterface
     }
 
     /**
-     * @return string
-     * @throws \ReflectionException
+     * @return DirectionInterface
      */
-    public function getName(): string
-    {
-        return str_replace('Direction', '', (new \ReflectionClass($this))->getShortName());
-    }
+    abstract public function toLeft(): DirectionInterface;
+
+    /**
+     * @return DirectionInterface
+     */
+    abstract public function toRight(): DirectionInterface;
+
+    /**
+     * @return string
+     */
+    abstract public static function getType(): string;
 }
